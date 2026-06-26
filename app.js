@@ -29,7 +29,7 @@ function fmtHMS(sec){
 }
 const $ = (s, root=document) => root.querySelector(s);
 const $$ = (s, root=document) => [...root.querySelectorAll(s)];
-const STORE = "tablettracking.v132";
+const STORE = "tablettracking.v133";
 
 const defaultState = () => ({
   machines: defaultMachines(),
@@ -780,7 +780,7 @@ function setupMachineScroller(){
 setupMachineScroller();
 
 if("serviceWorker" in navigator){
-  window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=132").catch(()=>{}));
+  window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=133").catch(()=>{}));
 }
 
 hydrate();
@@ -854,5 +854,65 @@ document.addEventListener("click",(e)=>{
   if(document.body){
     applyTheme(localStorage.getItem(THEME_KEY) || "light");
   }
+})();
+
+
+
+// v1.3.3 - inserimento forzato pulsante Pulisci su ogni scheda macchina
+(function(){
+  function clearMachineCard(card){
+    const index = Number(card.dataset.machine ?? card.getAttribute("data-machine") ?? 0);
+    const oldName =
+      (window.state && state.machines && state.machines[index]?.name) ||
+      card.querySelector(".machine-name")?.value ||
+      `Macchina ${index + 1}`;
+
+    if(!confirm(`Pulire solo ${oldName}? Verranno cancellati contatore attuale, capacità fusto, prodotto, margine sicurezza e produzione oraria.`)){
+      return;
+    }
+
+    const counter = card.querySelector(".counter");
+    const rate = card.querySelector(".rate");
+    const bin = card.querySelector(".bin");
+    const margin = card.querySelector(".margin");
+    const product = card.querySelector(".productSelect");
+
+    if(counter) counter.value = "";
+    if(rate) rate.value = "";
+    if(bin) bin.value = "";
+    if(margin) margin.value = 0;
+    if(product) product.value = "";
+
+    if(typeof state !== "undefined" && state.machines && state.machines[index]){
+      state.machines[index] = { name: oldName };
+    }
+
+    if(typeof save === "function") save();
+    if(typeof hydrate === "function") hydrate();
+    if(typeof render === "function") render();
+
+    alert(`${oldName} pulita.`);
+  }
+
+  function ensureCleanButtons(){
+    document.querySelectorAll(".machine").forEach(card => {
+      if(card.querySelector(".forceCleanMachine")) return;
+
+      const updateBtn = card.querySelector(".updateCounter");
+      if(!updateBtn) return;
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "forceCleanMachine btn danger";
+      btn.textContent = "Pulisci";
+
+      updateBtn.insertAdjacentElement("afterend", btn);
+      btn.addEventListener("click", () => clearMachineCard(card));
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", ensureCleanButtons);
+  document.addEventListener("click", () => setTimeout(ensureCleanButtons, 50));
+  setInterval(ensureCleanButtons, 1000);
 })();
 

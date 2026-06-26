@@ -1,5 +1,5 @@
-const CACHE = "tablettracking-v132";
-const ASSETS = ["./","./index.html","./style.css?v=132","./app.js?v=132","./manifest.json"];
+const CACHE = "tablettracking-v133";
+const ASSETS = ["./","./index.html","./style.css?v=133","./app.js?v=133","./manifest.json"];
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)));
   self.skipWaiting();
