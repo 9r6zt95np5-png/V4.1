@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#08111f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="TabletTracking">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>TabletTracking</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css?v=126a">
+</head>
+<body>
+<div class="app">
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Production assistant</p>
+      <h1>TabletTracking</h1>
+      <small>Versione 1.2.6.2</small>
+    </div>
+    <button id="endShiftBtn" class="btn ghost danger">Fine turno</button>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-view="dashboard">Dashboard</button>
+    <button class="tab" data-view="products">Prodotti</button>
+    <button class="tab" data-view="alerts">Avvisi</button>
+    <button class="tab" data-view="backup">Backup</button>
+  </nav>
+
+  <section id="dashboardView" class="view">
+    <section class="priority-card" id="priorityCard">
+      <p>PROSSIMA ATTIVITÀ</p>
+      <h2 id="priorityTitle">Configura il turno</h2>
+      <strong id="priorityCountdown">--:--:--</strong>
+      <span id="priorityTime">Ora: --</span>
+    </section>
+
+    <section class="setup-card">
+      <h2>Turno</h2>
+      <div class="shift-buttons">
+        <button class="btn" data-shift="14:00">Mattina<br><span>14:00</span></button>
+        <button class="btn" data-shift="22:00">Pomeriggio<br><span>22:00</span></button>
+        <button class="btn" data-shift="06:00">Notte<br><span>06:00</span></button>
+        <button class="btn" data-shift="12:00">Straordinario<br><span>12:00</span></button>
+      </div>
+      <div class="mini-grid">
+        <label>Fine turno scelta
+          <input id="shiftEndDisplay" type="text" readonly placeholder="Non impostata">
+        </label>
+      </div>
+    </section>
+
+    
+    <div class="machine-switcher">
+<button class="machine-jump active" data-target-machine="0">M1</button>
+<button class="machine-jump" data-target-machine="1">M2</button>
+<button class="machine-jump" data-target-machine="2">M3</button>
+<button class="machine-jump" data-target-machine="3">M4</button>
+</div>
+
+    <main class="machines" id="machinesScroller">
+      <section class="machine" data-machine="0">
+        <div class="machine-title">
+          <h2><input class="machine-name" value="Macchina 1"></h2>
+          <span class="machine-status">Non avviata</span>
+        </div>
+
+        <label>Prodotto
+          <select class="productSelect"></select>
+        </label>
+
+        <div class="grid">
+          <label>Contatore attuale<input class="counter" type="number" inputmode="numeric"></label>
+          <label>Produzione / ora<input class="rate" type="number" inputmode="numeric"></label>
+          <label>Capacità fusto<input class="bin" type="number" inputmode="numeric"></label>
+          <label>Margine sicurezza<input class="margin" type="number" inputmode="numeric" value="0"></label>
+        </div>
+
+        <div class="button-grid">
+          <button class="startMachine btn primary">Avvia macchina</button>
+          <button class="pauseMachine btn ghost">Macchina ferma</button>
+          <button class="updateCounter btn secondary">Aggiorna contatore</button>
+        </div>
+
+        <div class="result">
+          <p>CAMBIO FUSTO</p>
+          <strong class="countdown">--:--:--</strong>
+          <span class="changeTime">Ora: --</span>
+          <span class="changeCounter">Contatore: --</span>
+          <div class="bar"><i></i></div>
+          <details>
+            <summary>Prossimi cambi fino a fine turno</summary>
+            <ol class="schedule"></ol>
+          </details>
+        </div>
+
+        <div class="machine-alerts"></div>
+      </section>
+
+      <section class="machine" data-machine="1">
+        <div class="machine-title">
+          <h2><input class="machine-name" value="Macchina 2"></h2>
+          <span class="machine-status">Non avviata</span>
+        </div>
+
+        <label>Prodotto
+          <select class="productSelect"></select>
+        </label>
+
+        <div class="grid">
+          <label>Contatore attuale<input class="counter" type="number" inputmode="numeric"></label>
+          <label>Produzione / ora<input class="rate" type="number" inputmode="numeric"></label>
+          <label>Capacità fusto<input class="bin" type="number" inputmode="numeric"></label>
+          <label>Margine sicurezza<input class="margin" type="number" inputmode="numeric" value="0"></label>
+        </div>
+
+        <div class="button-grid">
+          <button class="startMachine btn primary">Avvia macchina</button>
+          <button class="pauseMachine btn ghost">Macchina ferma</button>
+          <button class="updateCounter btn secondary">Aggiorna contatore</button>
+        </div>
+
+        <div class="result">
+          <p>CAMBIO FUSTO</p>
+          <strong class="countdown">--:--:--</strong>
+          <span class="changeTime">Ora: --</span>
+          <span class="changeCounter">Contatore: --</span>
+          <div class="bar"><i></i></div>
+          <details>
+            <summary>Prossimi cambi fino a fine turno</summary>
+            <ol class="schedule"></ol>
+          </details>
+        </div>
+
+        <div class="machine-alerts"></div>
+      </section><section class="machine" data-machine="2">
+        <div class="machine-title">
+          <h2><input class="machine-name" value="Macchina 3"></h2>
+          <span class="machine-status">Non avviata</span>
+        </div>
+
+        <label>Prodotto
+          <select class="productSelect"></select>
+        </label>
+
+        <div class="grid">
+          <label>Contatore attuale<input class="counter" type="number" inputmode="numeric"></label>
+          <label>Produzione / ora<input class="rate" type="number" inputmode="numeric"></label>
+          <label>Capacità fusto<input class="bin" type="number" inputmode="numeric"></label>
+          <label>Margine sicurezza<input class="margin" type="number" inputmode="numeric" value="0"></label>
+        </div>
+
+        <div class="button-grid">
+          <button class="startMachine btn primary">Avvia macchina</button>
+          <button class="pauseMachine btn ghost">Macchina ferma</button>
+          <button class="updateCounter btn secondary">Aggiorna contatore</button>
+        </div>
+
+        <div class="result">
+          <p>CAMBIO FUSTO</p>
+          <strong class="countdown">--:--:--</strong>
+          <span class="changeTime">Ora: --</span>
+          <span class="changeCounter">Contatore: --</span>
+          <div class="bar"><i></i></div>
+          <details>
+            <summary>Prossimi cambi fino a fine turno</summary>
+            <ol class="schedule"></ol>
+          </details>
+        </div>
+
+        <div class="machine-alerts"></div>
+      </section><section class="machine" data-machine="3">
+        <div class="machine-title">
+          <h2><input class="machine-name" value="Macchina 4"></h2>
+          <span class="machine-status">Non avviata</span>
+        </div>
+
+        <label>Prodotto
+          <select class="productSelect"></select>
+        </label>
+
+        <div class="grid">
+          <label>Contatore attuale<input class="counter" type="number" inputmode="numeric"></label>
+          <label>Produzione / ora<input class="rate" type="number" inputmode="numeric"></label>
+          <label>Capacità fusto<input class="bin" type="number" inputmode="numeric"></label>
+          <label>Margine sicurezza<input class="margin" type="number" inputmode="numeric" value="0"></label>
+        </div>
+
+        <div class="button-grid">
+          <button class="startMachine btn primary">Avvia macchina</button>
+          <button class="pauseMachine btn ghost">Macchina ferma</button>
+          <button class="updateCounter btn secondary">Aggiorna contatore</button>
+        </div>
+
+        <div class="result">
+          <p>CAMBIO FUSTO</p>
+          <strong class="countdown">--:--:--</strong>
+          <span class="changeTime">Ora: --</span>
+          <span class="changeCounter">Contatore: --</span>
+          <div class="bar"><i></i></div>
+          <details>
+            <summary>Prossimi cambi fino a fine turno</summary>
+            <ol class="schedule"></ol>
+          </details>
+        </div>
+
+        <div class="machine-alerts"></div>
+      </section>
+    </main>
+  </section>
+
+  <section id="productsView" class="view hidden">
+    <section class="setup-card">
+      <h2>Database prodotti</h2>
+      <div class="grid">
+        <label>Nome prodotto<input id="productName" type="text" placeholder="Es. Prodotto A"></label>
+        <label>Produzione / ora<input id="productRate" type="number" inputmode="numeric"></label>
+        <label>Capacità fusto<input id="productBin" type="number" inputmode="numeric"></label>
+        <label>Margine predefinito<input id="productMargin" type="number" inputmode="numeric" value="0"></label>
+      </div>
+      <label>Macchina preferita
+        <select id="productMachine">
+          <option value="0">Macchina 1</option>
+          <option value="1">Macchina 2</option>
+          <option value="2">Macchina 3</option>
+          <option value="3">Macchina 4</option>
+        </select>
+      </label>
+      <button id="saveProductBtn" class="btn primary">Salva prodotto</button>
+    </section>
+
+    <section class="setup-card">
+      <h2>Prodotti salvati</h2>
+      <div id="productList" class="list"></div>
+    </section>
+  </section>
+
+  <section id="alertsView" class="view hidden">
+    <section class="setup-card">
+      <h2>Avvisi e controlli</h2>
+      <p class="hint">Uniformità: usa le ore macchina e calcola automaticamente la prossima soglia ogni 8 ore. Gli altri avvisi usano una frequenza oraria e l’ultimo orario fatto.</p>
+      <div class="grid">
+        <label>Tipo avviso
+          <select id="alertName">
+            <option>Uniformità</option>
+            <option>Uniformità per compresse</option>
+            <option>Friabilità</option>
+            <option>Disgregazione</option>
+            <option>Stampa PDF</option>
+            <option>Altro controllo</option>
+          </select>
+        </label>
+        <label>Macchina
+          <select id="alertMachine">
+            <option value="0">Macchina 1</option>
+            <option value="1">Macchina 2</option>
+            <option value="2">Macchina 3</option>
+            <option value="3">Macchina 4</option>
+          </select>
+        </label>
+        <label id="alertHoursWrap">Ripeti ogni ore<input id="alertHours" type="number" inputmode="decimal" step="0.5" value="8"></label>
+        <label id="alertLastTimeWrap">Ultimo fatto alle<input id="alertLastTime" type="time"></label>
+        <label id="machineHoursWrap" class="hidden">Tempo macchina attuale<input id="machineHoursInput" type="tel" inputmode="numeric" maxlength="8" placeholder="HH:MM:SS"></label>
+        <label id="uniformityTabletsWrap" class="hidden">Controllo a numero compresse<input id="uniformityTabletsInput" type="number" inputmode="numeric" placeholder="Es. 40000"></label>
+        <label id="uniformityCounterWrap" class="hidden">Contatore attuale<input id="uniformityCounterInput" type="number" inputmode="numeric" placeholder="Se vuoto usa quello macchina"></label>
+      </div>
+      <button id="lastNowBtn" class="btn secondary">Ultimo fatto ora</button>
+      <button id="addAlertBtn" class="btn primary">Aggiungi avviso</button>
+    </section>
+
+    <section class="setup-card">
+      <h2>Avvisi attivi</h2>
+      <div id="alertList" class="list"></div>
+    </section>
+  </section>
+
+  <section id="backupView" class="view hidden">
+    <section class="setup-card">
+      <h2>Backup</h2>
+      <p class="hint">Esporta o importa prodotti, macchine, turno e avvisi. Tutto resta salvato sul tuo iPhone.</p>
+      <button id="exportBtn" class="btn primary">Esporta backup</button>
+      <label class="import-label">Importa backup
+        <input id="importFile" type="file" accept="application/json">
+      </label>
+    </section>
+
+    <section class="setup-card">
+      <h2>Feedback</h2>
+      <textarea id="feedbackText" placeholder="Scrivi qui una miglioria o un problema trovato durante il turno..."></textarea>
+      <button id="saveFeedbackBtn" class="btn secondary">Salva feedback</button>
+      <div id="feedbackList" class="list"></div>
+    </section>
+  </section>
+
+  <footer>TabletTracking v1.2.6 · Offline ready</footer>
+</div>
+
+  <div id="startModal" class="modal hidden">
+    <div class="modal-box">
+      <h2>Avvia macchina</h2>
+      <p>Scegli da quale orario deve partire il calcolo.</p>
+      <button id="startNowChoice" class="btn primary">Ora attuale</button>
+      <button id="startManualChoice" class="btn secondary">Orario manuale</button>
+      <button id="startCancelChoice" class="btn ghost">Annulla</button>
+    </div>
+  </div>
+
+<script src="app.js?v=126a"></script>
+</body>
+</html>

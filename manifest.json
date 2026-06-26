@@ -1,0 +1,10 @@
+{
+  "name": "TabletTracking",
+  "short_name": "TabletTracking",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#08111f",
+  "theme_color": "#08111f",
+  "description": "Assistente produzione per cambio fusti, uniformità e avvisi extra.",
+  "icons": []
+}
