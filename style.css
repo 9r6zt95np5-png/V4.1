@@ -934,3 +934,9 @@ ol{
   .countdown{font-size:40px!important}
   .machine-jump{font-size:13px!important;min-height:48px}
 }
+
+.resetMachine{
+background:#dc2626!important;
+color:#fff!important;
+border:none;
+}

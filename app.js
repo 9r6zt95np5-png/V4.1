@@ -805,3 +805,19 @@ document.addEventListener("change", (event) => {
     }, 0);
   }
 });
+
+document.addEventListener("click",(e)=>{
+ const b=e.target.closest(".resetMachine");
+ if(!b)return;
+ const card=b.closest(".machine");
+ if(!card)return;
+ if(!confirm("Pulire questa macchina?")) return;
+ ["counter","rate","bin","margin"].forEach(c=>{
+   const el=card.querySelector("."+c);
+   if(el) el.value=(c=="margin"?"0":"");
+ });
+ const ps=card.querySelector(".productSelect");
+ if(ps) ps.value="";
+ if(typeof save==="function") save();
+ if(typeof render==="function") render();
+});
