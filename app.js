@@ -29,7 +29,7 @@ function fmtHMS(sec){
 }
 const $ = (s, root=document) => root.querySelector(s);
 const $$ = (s, root=document) => [...root.querySelectorAll(s)];
-const STORE = "tablettracking.v134";
+const STORE = "tablettracking.v136";
 
 const defaultState = () => ({
   machines: defaultMachines(),
@@ -131,6 +131,17 @@ function buildBinSchedule(machine, limit=20){
   return out;
 }
 
+
+function nextRepeatingDate(lastAt, intervalMinutes){
+  if(!lastAt || !intervalMinutes) return null;
+  const intervalMs = Number(intervalMinutes) * 60000;
+  let next = new Date(new Date(lastAt).getTime() + intervalMs);
+  while(next <= new Date()){
+    next = new Date(next.getTime() + intervalMs);
+  }
+  return next;
+}
+
 function nextAlert(alert){
   const machine = state.machines[alert.machineIndex] || {};
   const titleBase = `${alert.name} — ${machine.name || `Macchina ${num(alert.machineIndex)+1}`}`;
@@ -183,7 +194,7 @@ function nextAlert(alert){
 
   // Altri avvisi: calcolo classico da ultimo orario fatto + frequenza.
   if(!alert.lastAt || !alert.intervalMinutes) return null;
-  const at = new Date(new Date(alert.lastAt).getTime() + num(alert.intervalMinutes)*60000);
+  const at = nextRepeatingDate(alert.lastAt, alert.intervalMinutes);
   const type = "extra";
   return {type, title:titleBase, at, alert};
 }
@@ -372,8 +383,7 @@ function render(){
       $(".changeTime",card).textContent = `Ora: ${fmtTime(calc.at)}`;
       $(".changeCounter",card).textContent =
         `Cambio: ${calc.nextMultiple.toLocaleString("it-IT")} · Avviso: ${calc.alertCounter.toLocaleString("it-IT")}`;
-      const elapsed = Date.now() - calc.baseTime.getTime();
-      const progress = calc.totalMs > 0 ? Math.min(100, Math.max(0, elapsed / calc.totalMs * 100)) : 100;
+      const progress = Number.isFinite(calc.progress) ? calc.progress : 0;
       $(".bar i",card).style.width = `${progress}%`;
       if(remaining <= 2*60000) card.classList.add("bad");
       else if(remaining <= 10*60000) card.classList.add("warn");
@@ -780,7 +790,7 @@ function setupMachineScroller(){
 setupMachineScroller();
 
 if("serviceWorker" in navigator){
-  window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=134").catch(()=>{}));
+  window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=136").catch(()=>{}));
 }
 
 hydrate();
@@ -914,5 +924,114 @@ document.addEventListener("click",(e)=>{
   document.addEventListener("DOMContentLoaded", ensureCleanButtons);
   document.addEventListener("click", () => setTimeout(ensureCleanButtons, 50));
   setInterval(ensureCleanButtons, 1000);
+})();
+
+
+
+// v1.3.5 - correzione timer: quando arriva a zero passa al prossimo fusto/avviso
+(function(){
+  window.TabletTrackingAutoNextPatch = true;
+
+  // Override calculateBin if global function exists
+  if(typeof calculateBin === "function"){
+    calculateBin = function(machine){
+      const counter = Number(machine.counter || 0);
+      const rate = Number(machine.rate || 0);
+      const bin = Number(machine.bin || 0);
+      const margin = Number(machine.margin || 0);
+
+      if(rate <= 0 || bin <= 0 || !machine.lastUpdateAt) return null;
+
+      const baseTime = new Date(machine.lastUpdateAt);
+      const elapsedHours = Math.max(0, (Date.now() - baseTime.getTime()) / 3600000);
+      const estimatedCounter = counter + elapsedHours * rate;
+
+      const nextMultiple = Math.floor(estimatedCounter / bin + 1) * bin;
+      const alertCounter = Math.max(nextMultiple - margin, estimatedCounter);
+      const missing = Math.max(0, alertCounter - estimatedCounter);
+      const at = new Date(Date.now() + (missing / rate) * 3600000);
+
+      const previousMultiple = nextMultiple - bin;
+      const cycleStartCounter = Math.max(previousMultiple - margin, counter);
+      const cycleTotal = Math.max(1, alertCounter - cycleStartCounter);
+      const cycleDone = Math.max(0, estimatedCounter - cycleStartCounter);
+      const progress = Math.min(100, Math.max(0, cycleDone / cycleTotal * 100));
+
+      return {
+        type:"bin",
+        title:`Cambio fusto — ${machine.name || "Macchina"}`,
+        at,
+        nextMultiple,
+        alertCounter,
+        missing,
+        baseTime,
+        totalMs: missing / rate * 3600000,
+        estimatedCounter,
+        progress
+      };
+    };
+  }
+
+  if(typeof buildBinSchedule === "function"){
+    buildBinSchedule = function(machine, limit=20){
+      const calc = calculateBin(machine);
+      if(!calc) return [];
+
+      const rate = Number(machine.rate || 0);
+      const bin = Number(machine.bin || 0);
+      const margin = Number(machine.margin || 0);
+      const estimatedCounter = Number(calc.estimatedCounter || machine.counter || 0);
+      const out = [];
+
+      for(let i=0;i<limit;i++){
+        const target = calc.nextMultiple + bin*i;
+        const alertCounter = target - margin;
+        const missing = Math.max(0, alertCounter - estimatedCounter);
+        const at = new Date(Date.now() + missing / rate * 3600000);
+
+        if(typeof state !== "undefined" && state.shiftEnd && at > new Date(state.shiftEnd)) break;
+        out.push({target, alertCounter, at});
+      }
+
+      return out;
+    };
+  }
+
+  // Patch del rendering barra: se calc.progress esiste usa quello
+  const originalSetInterval = window.setInterval;
+  // Non tocchiamo setInterval: render userà calculateBin già corretto.
+})();
+
+
+
+// v1.3.6 - elimina automaticamente Uniformità quando è scaduta
+(function(){
+  function autoDeleteExpiredUniformity(){
+    if(typeof state === "undefined" || !Array.isArray(state.alerts)) return;
+    if(typeof nextAlert !== "function") return;
+
+    const now = Date.now();
+    const before = state.alerts.length;
+
+    state.alerts = state.alerts.filter(alert => {
+      if(alert.name !== "Uniformità") return true;
+
+      const event = nextAlert(alert);
+      if(!event || !event.at) return true;
+
+      // Elimina quando il controllo è arrivato o superato.
+      return event.at.getTime() > now;
+    });
+
+    if(state.alerts.length !== before){
+      if(typeof save === "function") save();
+      if(typeof renderAlerts === "function") renderAlerts();
+      if(typeof render === "function") render();
+    }
+  }
+
+  setInterval(autoDeleteExpiredUniformity, 1000);
+  document.addEventListener("visibilitychange", autoDeleteExpiredUniformity);
+  window.addEventListener("focus", autoDeleteExpiredUniformity);
 })();
 
