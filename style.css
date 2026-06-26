@@ -1080,3 +1080,309 @@ body.theme-dark .list-item{
 .machine .button-grid .forceCleanMachine{
   grid-column:auto!important;
 }
+
+
+/* =========================================================
+   TabletTracking v1.3.4 - Dashboard soft light
+   Bordi minimi, contrasto morbido, menu avvio chiaro
+   ========================================================= */
+
+:root{
+  --bg:#f7faff;
+  --card:#ffffff;
+  --soft:#f3f7fc;
+  --field:#fbfdff;
+  --text:#071225;
+  --muted:#607089;
+  --accent:#006fff;
+  --ok:#18bf63;
+  --warn:#ff9500;
+  --bad:#ef2f2f;
+}
+
+html,body{
+  background:
+    radial-gradient(circle at top left, rgba(0,111,255,.08), transparent 36%),
+    linear-gradient(180deg,#fbfdff 0%,#f2f6fb 100%)!important;
+  color:var(--text)!important;
+}
+
+.app{
+  max-width:980px;
+  padding:14px;
+}
+
+/* tutto più morbido */
+.setup-card,
+.machine,
+.priority-card,
+.tabs,
+.machine-switcher,
+.theme-settings-card,
+.product-item,
+.alert-item,
+.feedback-item,
+.list-item{
+  border:1px solid rgba(15,23,42,.055)!important;
+  box-shadow:0 12px 34px rgba(15,23,42,.055)!important;
+  background:rgba(255,255,255,.96)!important;
+}
+
+/* barra prossima attività */
+.priority-card{
+  border-radius:24px!important;
+  background:linear-gradient(135deg,#ffffff,#f6faff)!important;
+}
+
+.priority-card p{
+  color:#006fff!important;
+  font-weight:900;
+}
+
+.priority-card h2,
+.priority-card strong{
+  color:#071225!important;
+}
+
+.priority-card strong{
+  letter-spacing:-.06em;
+}
+
+/* tab superiori */
+.tabs{
+  background:rgba(255,255,255,.78)!important;
+  backdrop-filter:blur(14px);
+  border-radius:18px!important;
+  padding:5px!important;
+}
+
+.tab{
+  background:transparent!important;
+  color:#66758c!important;
+  border-radius:14px!important;
+}
+
+.tab.active{
+  background:#ffffff!important;
+  color:#006fff!important;
+  box-shadow:0 8px 22px rgba(0,111,255,.12)!important;
+  border:1px solid rgba(0,111,255,.18)!important;
+}
+
+/* selettore macchine */
+.machine-switcher{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  gap:10px!important;
+}
+
+.machine-jump{
+  background:rgba(255,255,255,.92)!important;
+  color:#1e293b!important;
+  border:1px solid rgba(15,23,42,.055)!important;
+  border-radius:16px!important;
+  box-shadow:0 10px 24px rgba(15,23,42,.045)!important;
+}
+
+.machine-jump.active{
+  color:#006fff!important;
+  border-color:rgba(0,111,255,.25)!important;
+  box-shadow:0 12px 28px rgba(0,111,255,.10)!important;
+}
+
+/* scheda macchina */
+.machine{
+  border-radius:24px!important;
+  padding:16px!important;
+}
+
+.machine::before{
+  opacity:.85;
+}
+
+.machine-name,
+.machine h2 input{
+  color:#071225!important;
+}
+
+.machine-status{
+  background:#eafaf0!important;
+  color:#108647!important;
+  border:0!important;
+}
+
+/* campi */
+label{
+  color:#607089!important;
+}
+
+input,select,textarea{
+  background:#fbfdff!important;
+  border:1px solid rgba(15,23,42,.075)!important;
+  color:#071225!important;
+  box-shadow:none!important;
+}
+
+input:focus,select:focus,textarea:focus{
+  border-color:rgba(0,111,255,.45)!important;
+  box-shadow:0 0 0 3px rgba(0,111,255,.10)!important;
+  outline:none;
+}
+
+/* pulsanti */
+.btn,button{
+  border-radius:15px!important;
+  box-shadow:none!important;
+}
+
+.primary,
+.updateCounter{
+  background:linear-gradient(135deg,#007aff,#1664e8)!important;
+  color:white!important;
+}
+
+.secondary{
+  background:#eef4fb!important;
+  color:#071225!important;
+}
+
+.ghost{
+  background:#f4f7fb!important;
+  color:#071225!important;
+}
+
+.forceCleanMachine,
+.resetMachine,
+.pulisciMachine{
+  background:linear-gradient(135deg,#e02626,#ef4444)!important;
+  color:white!important;
+}
+
+/* risultato cambio fusto */
+.result{
+  background:linear-gradient(180deg,#ffffff,#f7faff)!important;
+  border:1px solid rgba(15,23,42,.055)!important;
+  border-radius:22px!important;
+  box-shadow:none!important;
+}
+
+.result p{
+  color:#006fff!important;
+}
+
+.countdown{
+  color:#071225!important;
+}
+
+.changeTime,.changeCounter{
+  color:#607089!important;
+}
+
+.bar{
+  background:#e7edf5!important;
+}
+
+.bar i{
+  background:linear-gradient(90deg,#68b7ff,#006fff)!important;
+  box-shadow:none!important;
+}
+
+/* menu/modale Avvia macchina chiaro */
+.modal,
+.dialog,
+.start-modal,
+.startMenu,
+.start-options,
+.popup,
+.overlay{
+  color:#071225!important;
+}
+
+.modal,
+.overlay{
+  background:rgba(15,23,42,.18)!important;
+  backdrop-filter:blur(8px);
+}
+
+.modal-box,
+.dialog-box,
+.popup-box,
+.start-box,
+.start-menu,
+.startOptions,
+.start-options{
+  background:#ffffff!important;
+  color:#071225!important;
+  border:1px solid rgba(15,23,42,.07)!important;
+  box-shadow:0 22px 60px rgba(15,23,42,.18)!important;
+}
+
+.modal-box h2,
+.dialog-box h2,
+.popup-box h2,
+.start-box h2,
+.start-menu h2{
+  color:#071225!important;
+}
+
+.modal-box p,
+.dialog-box p,
+.popup-box p,
+.start-box p,
+.start-menu p{
+  color:#607089!important;
+}
+
+/* fallback per prompt custom con bottoni */
+button.start-current,
+button.start-manual,
+.currentTimeBtn,
+.manualTimeBtn{
+  background:#eef4fb!important;
+  color:#071225!important;
+}
+
+/* se il tema scuro è attivo, il menu avvia resta comunque chiaro in tema chiaro */
+body:not(.theme-dark) .modal *,
+body:not(.theme-dark) .overlay *{
+  color:inherit;
+}
+
+body:not(.theme-dark) .modal-box,
+body:not(.theme-dark) .dialog-box,
+body:not(.theme-dark) .popup-box{
+  background:#ffffff!important;
+}
+
+/* tema scuro: corregge comunque il menu avvia con contrasti coerenti */
+body.theme-dark .modal{
+  background:rgba(0,0,0,.55)!important;
+}
+
+body.theme-dark .modal-box{
+  background:#111821!important;
+  color:#f8fbff!important;
+  border-color:rgba(255,255,255,.09)!important;
+}
+
+body.theme-dark .modal-box h2{
+  color:#f8fbff!important;
+}
+
+body.theme-dark .modal-box p{
+  color:#9aa8ba!important;
+}
+
+/* mobile */
+@media(max-width:540px){
+  .machine{
+    padding:14px!important;
+  }
+  .machine .grid{
+    gap:8px!important;
+  }
+  .machine .button-grid{
+    gap:10px!important;
+  }
+}
