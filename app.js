@@ -29,7 +29,7 @@ function fmtHMS(sec){
 }
 const $ = (s, root=document) => root.querySelector(s);
 const $$ = (s, root=document) => [...root.querySelectorAll(s)];
-const STORE = "tablettracking.v126a";
+const STORE = "tablettracking.v130";
 
 const defaultState = () => ({
   machines: defaultMachines(),
@@ -557,7 +557,7 @@ $$(".resetMachine").forEach(btn=>{
     const i = Number(card.dataset.machine);
     const oldName = state.machines[i]?.name || `Macchina ${i+1}`;
 
-    if(!confirm(`Azzerare solo ${oldName}? Le altre macchine non verranno modificate.`)) return;
+    if(!confirm(`Pulire solo ${oldName}? Le altre macchine non verranno modificate.`)) return;
 
     state.machines[i] = { name: oldName };
 
@@ -575,7 +575,7 @@ $$(".resetMachine").forEach(btn=>{
     save();
     hydrate();
     render();
-    alert(`${oldName} azzerata.`);
+    alert(`${oldName} pulita.`);
   };
 });
 
@@ -780,7 +780,7 @@ function setupMachineScroller(){
 setupMachineScroller();
 
 if("serviceWorker" in navigator){
-  window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=126a").catch(()=>{}));
+  window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=130").catch(()=>{}));
 }
 
 hydrate();
