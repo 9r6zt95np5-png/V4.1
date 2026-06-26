@@ -29,7 +29,7 @@ function fmtHMS(sec){
 }
 const $ = (s, root=document) => root.querySelector(s);
 const $$ = (s, root=document) => [...root.querySelectorAll(s)];
-const STORE = "tablettracking.v130";
+const STORE = "tablettracking.v132";
 
 const defaultState = () => ({
   machines: defaultMachines(),
@@ -780,7 +780,7 @@ function setupMachineScroller(){
 setupMachineScroller();
 
 if("serviceWorker" in navigator){
-  window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=130").catch(()=>{}));
+  window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=132").catch(()=>{}));
 }
 
 hydrate();
@@ -821,3 +821,38 @@ document.addEventListener("click",(e)=>{
  if(typeof save==="function") save();
  if(typeof render==="function") render();
 });
+
+
+// v1.3.2 - tema chiaro/scuro
+(function(){
+  const THEME_KEY = "tablettracking.theme";
+
+  function applyTheme(theme){
+    document.body.classList.toggle("theme-dark", theme === "dark");
+    const light = document.getElementById("themeLightBtn");
+    const dark = document.getElementById("themeDarkBtn");
+    if(light) light.classList.toggle("active-theme", theme !== "dark");
+    if(dark) dark.classList.toggle("active-theme", theme === "dark");
+  }
+
+  function saveTheme(theme){
+    localStorage.setItem(THEME_KEY, theme);
+    applyTheme(theme);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    applyTheme(localStorage.getItem(THEME_KEY) || "light");
+
+    const light = document.getElementById("themeLightBtn");
+    const dark = document.getElementById("themeDarkBtn");
+
+    if(light) light.onclick = () => saveTheme("light");
+    if(dark) dark.onclick = () => saveTheme("dark");
+  });
+
+  // Applica subito, anche prima del caricamento completo
+  if(document.body){
+    applyTheme(localStorage.getItem(THEME_KEY) || "light");
+  }
+})();
+

@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>TabletTracking</title>
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css?v=130">
+  <link rel="stylesheet" href="style.css?v=132">
 </head>
 <body>
 <div class="app">
@@ -17,7 +17,7 @@
     <div>
       <p class="eyebrow">Production assistant</p>
       <h1>TabletTracking</h1>
-      <small>Versione 1.3.0.2</small>
+      <small>Versione 1.3.2.2</small>
     </div>
     <button id="endShiftBtn" class="btn ghost danger">Fine turno</button>
   </header>
@@ -279,6 +279,16 @@
   <section id="backupView" class="view hidden">
     <section class="setup-card">
       <h2>Backup</h2>
+
+      <div class="theme-settings-card">
+        <h3>Tema interfaccia</h3>
+        <p class="hint">Scegli il tema che preferisci. La scelta viene salvata automaticamente.</p>
+        <div class="theme-toggle">
+          <button id="themeLightBtn" class="btn secondary" type="button">Tema chiaro</button>
+          <button id="themeDarkBtn" class="btn secondary" type="button">Tema scuro</button>
+        </div>
+      </div>
+
       <p class="hint">Esporta o importa prodotti, macchine, turno e avvisi. Tutto resta salvato sul tuo iPhone.</p>
       <button id="exportBtn" class="btn primary">Esporta backup</button>
       <label class="import-label">Importa backup
@@ -294,7 +304,7 @@
     </section>
   </section>
 
-  <footer>TabletTracking v1.3.0 · Offline ready</footer>
+  <footer>TabletTracking v1.3.2 · Offline ready</footer>
 </div>
 
   <div id="startModal" class="modal hidden">
@@ -307,6 +317,6 @@
     </div>
   </div>
 
-<script src="app.js?v=130"></script>
+<script src="app.js?v=132"></script>
 </body>
 </html>
