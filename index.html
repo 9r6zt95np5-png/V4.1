@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>TabletTracking</title>
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css?v=136">
+  <link rel="stylesheet" href="style.css?v=137">
 </head>
 <body>
 <div class="app">
@@ -17,7 +17,7 @@
     <div>
       <p class="eyebrow">Production assistant</p>
       <h1>TabletTracking</h1>
-      <small>Versione 1.3.6.2</small>
+      <small>Versione 1.3.7.2</small>
     </div>
     <button id="endShiftBtn" class="btn ghost danger">Fine turno</button>
   </header>
@@ -35,6 +35,10 @@
       <h2 id="priorityTitle">Configura il turno</h2>
       <strong id="priorityCountdown">--:--:--</strong>
       <span id="priorityTime">Ora: --</span>
+      <div class="next-five-box">
+        <div class="next-five-title">Prossime 5 attività</div>
+        <div id="nextFiveActivities" class="next-five-list"></div>
+      </div>
     </section>
 
     <section class="setup-card">
@@ -304,7 +308,7 @@
     </section>
   </section>
 
-  <footer>TabletTracking v1.3.6 · Offline ready</footer>
+  <footer>TabletTracking v1.3.7 · Offline ready</footer>
 </div>
 
   <div id="startModal" class="modal hidden">
@@ -317,6 +321,6 @@
     </div>
   </div>
 
-<script src="app.js?v=136"></script>
+<script src="app.js?v=137"></script>
 </body>
 </html>

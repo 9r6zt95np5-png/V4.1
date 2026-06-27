@@ -29,7 +29,7 @@ function fmtHMS(sec){
 }
 const $ = (s, root=document) => root.querySelector(s);
 const $$ = (s, root=document) => [...root.querySelectorAll(s)];
-const STORE = "tablettracking.v136";
+const STORE = "tablettracking.v137";
 
 const defaultState = () => ({
   machines: defaultMachines(),
@@ -790,7 +790,7 @@ function setupMachineScroller(){
 setupMachineScroller();
 
 if("serviceWorker" in navigator){
-  window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=136").catch(()=>{}));
+  window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=137").catch(()=>{}));
 }
 
 hydrate();
@@ -1033,5 +1033,104 @@ document.addEventListener("click",(e)=>{
   setInterval(autoDeleteExpiredUniformity, 1000);
   document.addEventListener("visibilitychange", autoDeleteExpiredUniformity);
   window.addEventListener("focus", autoDeleteExpiredUniformity);
+})();
+
+
+
+// v1.3.7 - mostra le 5 prossime attività nel banner principale
+(function(){
+  function formatSmallTime(date){
+    if(typeof fmtTime === "function") return fmtTime(date);
+    const p = n => String(n).padStart(2,"0");
+    return `${p(date.getHours())}:${p(date.getMinutes())}:${p(date.getSeconds())}`;
+  }
+
+  function formatSmallDuration(ms){
+    if(typeof fmtDuration === "function") return fmtDuration(ms);
+    if(ms <= 0) return "00:00:00";
+    const s = Math.floor(ms / 1000);
+    const p = n => String(n).padStart(2,"0");
+    return `${p(Math.floor(s/3600))}:${p(Math.floor((s%3600)/60))}:${p(s%60)}`;
+  }
+
+  function getUpcomingEvents(){
+    try{
+      if(typeof allEvents === "function"){
+        return allEvents();
+      }
+    }catch{}
+
+    const events = [];
+
+    try{
+      if(typeof state !== "undefined" && Array.isArray(state.machines) && typeof calculateBin === "function"){
+        state.machines.forEach(machine => {
+          if(machine && !machine.paused){
+            const calc = calculateBin(machine);
+            if(calc && calc.at){
+              events.push({
+                type:"bin",
+                title:`Cambio fusto — ${machine.name || "Macchina"}`,
+                at: calc.at
+              });
+            }
+          }
+        });
+      }
+
+      if(typeof state !== "undefined" && Array.isArray(state.alerts) && typeof nextAlert === "function"){
+        state.alerts.forEach(alert => {
+          const ev = nextAlert(alert);
+          if(ev && ev.at){
+            events.push(ev);
+          }
+        });
+      }
+    }catch{}
+
+    return events.sort((a,b)=>a.at-b.at);
+  }
+
+  function renderNextFiveActivities(){
+    const box = document.getElementById("nextFiveActivities");
+    if(!box) return;
+
+    const events = getUpcomingEvents()
+      .filter(event => event && event.at)
+      .sort((a,b)=>a.at-b.at)
+      .slice(1, 6);
+
+    if(!events.length){
+      box.innerHTML = `<div class="next-five-empty">Nessun'altra attività programmata</div>`;
+      return;
+    }
+
+    box.innerHTML = events.map(event => {
+      const diff = event.at.getTime() - Date.now();
+      const cls = diff <= 0 ? "due" : diff <= 10*60*1000 ? "soon" : "";
+      return `
+        <div class="next-five-item ${cls}">
+          <div class="next-five-name">${event.title || "Attività"}</div>
+          <div class="next-five-meta">
+            <span>${formatSmallDuration(diff)}</span>
+            <span>${formatSmallTime(event.at)}</span>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  const originalRender = typeof render === "function" ? render : null;
+  if(originalRender && !window.__nextFiveRenderPatched){
+    window.__nextFiveRenderPatched = true;
+    render = function(){
+      const result = originalRender.apply(this, arguments);
+      setTimeout(renderNextFiveActivities, 0);
+      return result;
+    };
+  }
+
+  setInterval(renderNextFiveActivities, 1000);
+  document.addEventListener("DOMContentLoaded", renderNextFiveActivities);
 })();
 

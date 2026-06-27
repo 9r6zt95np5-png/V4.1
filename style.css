@@ -1386,3 +1386,92 @@ body.theme-dark .modal-box p{
     gap:10px!important;
   }
 }
+
+/* v1.3.7 - prossime 5 attività nel banner */
+.next-five-box{
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid rgba(15,23,42,.08);
+}
+
+.next-five-title{
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  font-weight:950;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+
+.next-five-list{
+  display:grid;
+  gap:7px;
+}
+
+.next-five-item{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px;
+  align-items:center;
+  background:rgba(255,255,255,.62);
+  border:1px solid rgba(15,23,42,.055);
+  border-radius:14px;
+  padding:9px 10px;
+}
+
+.next-five-name{
+  font-size:14px;
+  font-weight:850;
+  color:var(--text);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.next-five-meta{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:850;
+}
+
+.next-five-item.soon{
+  border-color:rgba(255,149,0,.28);
+  background:rgba(255,149,0,.08);
+}
+
+.next-five-item.due{
+  border-color:rgba(239,47,47,.32);
+  background:rgba(239,47,47,.08);
+}
+
+.next-five-empty{
+  color:var(--muted);
+  font-size:13px;
+  padding:8px 0;
+}
+
+body.theme-dark .next-five-box{
+  border-top-color:rgba(255,255,255,.08);
+}
+
+body.theme-dark .next-five-item{
+  background:rgba(255,255,255,.055);
+  border-color:rgba(255,255,255,.075);
+}
+
+body.theme-dark .next-five-name{
+  color:#f8fbff;
+}
+
+@media(max-width:540px){
+  .next-five-item{
+    grid-template-columns:1fr;
+    gap:4px;
+  }
+  .next-five-meta{
+    justify-content:space-between;
+  }
+}
