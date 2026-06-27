@@ -1651,3 +1651,122 @@ body.theme-dark #priorityCard .priority-side .next-five-box{
     padding-left:9px !important;
   }
 }
+
+/* =========================================================
+   v1.4.0 - correzione Avvisi nel tema scuro
+   ========================================================= */
+
+body.theme-dark .alert-item,
+body.theme-dark .alerts-card,
+body.theme-dark .alert-card,
+body.theme-dark #alertsList > *,
+body.theme-dark .view[data-view="alerts"] .card,
+body.theme-dark [data-section="alerts"] .card{
+  background:#121a24 !important;
+  color:#f7f9fc !important;
+  border-color:rgba(255,255,255,.08) !important;
+  box-shadow:0 12px 30px rgba(0,0,0,.20) !important;
+}
+
+body.theme-dark .alert-item *,
+body.theme-dark .alerts-card *,
+body.theme-dark .alert-card *,
+body.theme-dark #alertsList > * *,
+body.theme-dark .view[data-view="alerts"] .card *,
+body.theme-dark [data-section="alerts"] .card *{
+  color:inherit;
+}
+
+body.theme-dark .alert-item h1,
+body.theme-dark .alert-item h2,
+body.theme-dark .alert-item h3,
+body.theme-dark .alert-item h4,
+body.theme-dark .alert-item strong,
+body.theme-dark .alert-title,
+body.theme-dark .alert-name,
+body.theme-dark #alertsList h1,
+body.theme-dark #alertsList h2,
+body.theme-dark #alertsList h3,
+body.theme-dark #alertsList strong{
+  color:#ffffff !important;
+}
+
+body.theme-dark .alert-item p,
+body.theme-dark .alert-item span,
+body.theme-dark .alert-item small,
+body.theme-dark .alert-item label,
+body.theme-dark .alert-meta,
+body.theme-dark .alert-description,
+body.theme-dark #alertsList p,
+body.theme-dark #alertsList span,
+body.theme-dark #alertsList small,
+body.theme-dark #alertsList label{
+  color:#aeb9c8 !important;
+}
+
+body.theme-dark .alert-item .countdown,
+body.theme-dark .alert-item .time,
+body.theme-dark .alert-item .alert-time,
+body.theme-dark .alert-countdown,
+body.theme-dark #alertsList .countdown,
+body.theme-dark #alertsList .time{
+  color:#72b4ff !important;
+}
+
+body.theme-dark .alert-item input,
+body.theme-dark .alert-item select,
+body.theme-dark .alert-item textarea,
+body.theme-dark .alerts-card input,
+body.theme-dark .alerts-card select,
+body.theme-dark .alerts-card textarea,
+body.theme-dark .view[data-view="alerts"] input,
+body.theme-dark .view[data-view="alerts"] select,
+body.theme-dark .view[data-view="alerts"] textarea{
+  background:#0c131c !important;
+  color:#f8fbff !important;
+  border-color:rgba(255,255,255,.10) !important;
+}
+
+body.theme-dark .alert-item input::placeholder,
+body.theme-dark .alert-item textarea::placeholder,
+body.theme-dark .view[data-view="alerts"] input::placeholder,
+body.theme-dark .view[data-view="alerts"] textarea::placeholder{
+  color:#718096 !important;
+}
+
+body.theme-dark .alert-item option,
+body.theme-dark .alerts-card option,
+body.theme-dark .view[data-view="alerts"] option{
+  background:#111821 !important;
+  color:#f8fbff !important;
+}
+
+body.theme-dark .alert-item button:not(.danger):not(.delete):not(.remove),
+body.theme-dark .alerts-card button:not(.danger):not(.delete):not(.remove),
+body.theme-dark .view[data-view="alerts"] button:not(.danger):not(.delete):not(.remove){
+  background:#1a2634 !important;
+  color:#f8fbff !important;
+  border-color:rgba(255,255,255,.08) !important;
+}
+
+body.theme-dark .alert-item .danger,
+body.theme-dark .alert-item .delete,
+body.theme-dark .alert-item .remove,
+body.theme-dark .alerts-card .danger,
+body.theme-dark .alerts-card .delete,
+body.theme-dark .alerts-card .remove{
+  background:#7f1d1d !important;
+  color:#ffffff !important;
+}
+
+body.theme-dark .alert-item.soon,
+body.theme-dark #alertsList > *.soon{
+  background:#2b2110 !important;
+  border-color:rgba(255,180,70,.25) !important;
+}
+
+body.theme-dark .alert-item.due,
+body.theme-dark #alertsList > *.due{
+  background:#2a1315 !important;
+  border-color:rgba(255,90,90,.28) !important;
+}
