@@ -539,12 +539,26 @@ $$("[data-shift]").forEach(btn=>btn.onclick=()=>{
 
 
 $("#endShiftBtn").onclick = () => {
-  if(confirm("Vuoi azzerare il turno? Prodotti e avvisi restano salvati.")){
-    state.machines = [0,1,2,3].map(i => ({name: state.machines[i]?.name || `Macchina ${i+1}`}));
-    state.shiftEnd = null;
-    save();
-    hydrate(); render();
-  }
+  if(!confirm("Terminare il turno? Tutte le macchine verranno svuotate e tutti gli avvisi attivi saranno eliminati. I nomi delle macchine e i prodotti salvati resteranno disponibili.")) return;
+
+  // Svuota completamente le macchine, conservando solo i nomi personalizzati.
+  state.machines = [0,1,2,3].map(i => ({
+    name: state.machines[i]?.name || `Macchina ${i+1}`
+  }));
+
+  // Elimina tutti gli avvisi attivi e azzera la fine turno.
+  state.alerts = [];
+  state.shiftEnd = null;
+
+  // Azzera anche le selezioni prodotto rimaste visibili nelle schede.
+  $$(".productSelect").forEach(select => select.value = "");
+
+  save();
+  hydrate();
+  render();
+  renderAlerts();
+
+  alert("Turno terminato: macchine svuotate e avvisi eliminati.");
 };
 
 $$(".startMachine").forEach(btn=>btn.onclick=e=>startMachine(e.target.closest(".machine")));
@@ -790,7 +804,7 @@ function setupMachineScroller(){
 setupMachineScroller();
 
 if("serviceWorker" in navigator){
-  window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=141").catch(()=>{}));
+  window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=142").catch(()=>{}));
 }
 
 hydrate();
