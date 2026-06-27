@@ -1770,3 +1770,38 @@ body.theme-dark #alertsList > *.due{
   background:#2a1315 !important;
   border-color:rgba(255,90,90,.28) !important;
 }
+
+
+/* v1.4.1 - fix titolo avvisi attivi nel tema scuro */
+body.theme-dark .alert-item .alert-title,
+body.theme-dark .alert-item .title,
+body.theme-dark .alert-item .item-title,
+body.theme-dark .alert-item .name,
+body.theme-dark .alert-item .header,
+body.theme-dark .alert-item .header *,
+body.theme-dark .alert-item > strong,
+body.theme-dark .alert-item > b,
+body.theme-dark .alert-item .machine-title,
+body.theme-dark .alert-item [class*="title"],
+body.theme-dark .alert-item [class*="name"],
+body.theme-dark #alertsList .alert-item .alert-title,
+body.theme-dark #alertsList .alert-item .title,
+body.theme-dark #alertsList .alert-item .item-title,
+body.theme-dark #alertsList .alert-item [class*="title"],
+body.theme-dark #alertsList .alert-item [class*="name"],
+body.theme-dark #alertsList .alert-item strong:first-child,
+body.theme-dark #alertsList .alert-item h1,
+body.theme-dark #alertsList .alert-item h2,
+body.theme-dark #alertsList .alert-item h3,
+body.theme-dark #alertsList .alert-item h4,
+body.theme-dark #alertsList .alert-item strong {
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+}
+
+body.theme-dark .alert-item .alert-subtitle,
+body.theme-dark #alertsList .alert-item p,
+body.theme-dark #alertsList .alert-item span,
+body.theme-dark #alertsList .alert-item small {
+  color:#c3cfdd !important;
+}
