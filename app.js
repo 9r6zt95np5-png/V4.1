@@ -29,7 +29,7 @@ function fmtHMS(sec){
 }
 const $ = (s, root=document) => root.querySelector(s);
 const $$ = (s, root=document) => [...root.querySelectorAll(s)];
-const STORE = "tablettracking.v141";
+const STORE = "tablettracking.v143";
 
 const defaultState = () => ({
   machines: defaultMachines(),
@@ -804,7 +804,7 @@ function setupMachineScroller(){
 setupMachineScroller();
 
 if("serviceWorker" in navigator){
-  window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=142").catch(()=>{}));
+  window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js?v=143").catch(()=>{}));
 }
 
 hydrate();

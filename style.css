@@ -1805,3 +1805,42 @@ body.theme-dark #alertsList .alert-item span,
 body.theme-dark #alertsList .alert-item small {
   color:#c3cfdd !important;
 }
+
+
+/* v1.4.3 - fix Prodotti salvati nel tema scuro */
+body.theme-dark #productList .list-item,
+body.theme-dark #productList .product-item,
+body.theme-dark .view[data-view="products"] .list-item,
+body.theme-dark .view[data-view="products"] .product-item {
+  background:#121a24 !important;
+  border-color:rgba(255,255,255,.08) !important;
+  color:#f8fbff !important;
+}
+
+body.theme-dark #productList .list-item b,
+body.theme-dark #productList .list-item strong,
+body.theme-dark #productList .product-item b,
+body.theme-dark #productList .product-item strong,
+body.theme-dark .view[data-view="products"] .list-item b,
+body.theme-dark .view[data-view="products"] .list-item strong,
+body.theme-dark .view[data-view="products"] .product-item b,
+body.theme-dark .view[data-view="products"] .product-item strong {
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+}
+
+body.theme-dark #productList .list-item span,
+body.theme-dark #productList .product-item span,
+body.theme-dark .view[data-view="products"] .list-item span,
+body.theme-dark .view[data-view="products"] .product-item span,
+body.theme-dark #productList .hint,
+body.theme-dark .view[data-view="products"] .hint {
+  color:#c3cfdd !important;
+}
+
+body.theme-dark #productList .list-item button:not(.danger),
+body.theme-dark #productList .product-item button:not(.danger),
+body.theme-dark .view[data-view="products"] .list-item button:not(.danger),
+body.theme-dark .view[data-view="products"] .product-item button:not(.danger) {
+  color:#ffffff !important;
+}
